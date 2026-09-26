@@ -44,13 +44,13 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           scripts: |
-            docker pull abhi9519/demo-cicd:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/demo-cicd:latest
 
             docker rm -f demo-cicd || true
 
             docker run -d \
             -p 8080:8080 \
             --name demo-cicdd \
-            abhi9519/demo-cicd:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/demo-cicd:latest
     
     
