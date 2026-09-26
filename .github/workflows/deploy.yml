@@ -19,7 +19,9 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - run: java --version
+
+      - name: Check JAVA Version
+        run: java --version
 
       - name: Build JAR
         run: mvn clean package -DskipTests
@@ -33,6 +35,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: true
           tags: abhi9519/demo-cicd:latest
 
@@ -43,10 +46,10 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
 
-          scripts: |
+          script: |
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/demo-cicd:latest
 
-            docker rm -f demo-cicd || true
+            docker rm -f demo-cicdd || true
 
             docker run -d \
             -p 8080:8080 \
